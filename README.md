@@ -1,6 +1,6 @@
 # HANSA - Kids Learning App
 
-A fun and interactive Android app designed for children to learn through play.
+A fun and interactive Android app designed for children to learn through play. (Used Android Studio)
 
 ## Features
 - 🐶 Animals quiz with sounds
