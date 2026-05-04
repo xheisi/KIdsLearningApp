@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tag_number" type="id"/>
+    <item name="tag_origin_x" type="id"/>
+    <item name="tag_origin_y" type="id"/>
+</resources>

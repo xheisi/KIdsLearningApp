@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Kids Learning App</string>
+    <string name="animals">Animals</string>
+    <string name="numbers">Numbers</string>
+    <string name="alphabet">Alphabet</string>
+    <string name="shapes">Shapes</string>
+    <string name="quiz_question">Which animal is this?</string>
+    <string name="btn_next">Next ➡️</string>
+    <string name="btn_start">Start</string>
+    <string name="score_label">Score</string>
+</resources>
