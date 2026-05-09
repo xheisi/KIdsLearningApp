@@ -1,5 +1,6 @@
 package com.example.kidslearningapp;
 
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -341,9 +342,22 @@ public class AnimalsActivity extends AppCompatActivity implements TextToSpeech.O
                     "result");
         }
 
+        saveScoreToPrefs(score);
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
 
         new Handler().postDelayed(this::finish, 2500);
+    }
+
+    /**
+     * Adds this session's score to the cumulative total in SharedPreferences.
+     * MainActivity reads this in onResume() to display the running total.
+     */
+    private void saveScoreToPrefs(int sessionScore) {
+        SharedPreferences prefs = getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE);
+        int previous = prefs.getInt(MainActivity.KEY_TOTAL, 0);
+        prefs.edit()
+                .putInt(MainActivity.KEY_TOTAL, previous + sessionScore)
+                .apply();
     }
 
     @Override

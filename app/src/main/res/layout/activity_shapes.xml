@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    Background image: name your file  shapes_bg  and place in res/drawable/.
-    Top bar colour: #FDB1D0 (bubblegum pink) as requested.
--->
-<FrameLayout
+<!-- FIXED: FrameLayout → ConstraintLayout -->
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!-- Background image -->
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/shapes_bg"
         android:scaleType="centerCrop"
-        android:contentDescription="@null"/>
+        android:contentDescription="@null"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Top bar — bubblegum pink -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/topBar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="#FDB1D0"
         android:padding="12dp"
-        android:elevation="4dp">
+        android:elevation="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <Button
             android:id="@+id/backButton"
@@ -36,7 +41,7 @@
             android:textColor="#FFFFFF"
             android:background="@drawable/btn_circle_white"
             android:padding="0dp"
-            android:stateListAnimator="@null"/>
+            android:stateListAnimator="@null" />
 
         <TextView
             android:layout_width="0dp"
@@ -51,27 +56,34 @@
             android:shadowColor="#44000000"
             android:shadowDx="0"
             android:shadowDy="1"
-            android:shadowRadius="3"/>
+            android:shadowRadius="3" />
 
-        <View android:layout_width="44dp" android:layout_height="44dp"/>
+        <View android:layout_width="44dp" android:layout_height="44dp" />
     </LinearLayout>
 
-    <!-- Play canvas -->
+    <!-- Play canvas — fills space between top bar and bottom of screen -->
     <FrameLayout
         android:id="@+id/dragCanvas"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="68dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:clipChildren="false"
-        android:clipToPadding="false"/>
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Celebration overlay -->
+    <!-- Celebration overlay — full screen, shown on round complete -->
     <FrameLayout
         android:id="@+id/celebOverlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/celebration_card"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="🎊"
-                android:textSize="88sp"/>
+                android:textSize="88sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -100,7 +112,7 @@
                 android:shadowDx="0"
                 android:shadowDy="3"
                 android:shadowRadius="6"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -109,7 +121,7 @@
                 android:textSize="16sp"
                 android:textColor="#FFFFFFDD"
                 android:gravity="center"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp" />
 
             <Button
                 android:id="@+id/playAgainButton"
@@ -121,7 +133,7 @@
                 android:textStyle="bold"
                 android:textColor="#FDB1D0"
                 android:background="@drawable/btn_celeb_white"
-                android:stateListAnimator="@null"/>
+                android:stateListAnimator="@null" />
 
             <Button
                 android:id="@+id/menuButton"
@@ -133,8 +145,8 @@
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
                 android:background="@drawable/btn_menu_outline"
-                android:stateListAnimator="@null"/>
+                android:stateListAnimator="@null" />
         </LinearLayout>
     </FrameLayout>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

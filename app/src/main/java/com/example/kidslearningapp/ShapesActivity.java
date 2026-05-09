@@ -1,5 +1,6 @@
 package com.example.kidslearningapp;
 
+import android.content.SharedPreferences;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.RectF;
@@ -127,6 +128,18 @@ public class ShapesActivity extends AppCompatActivity implements TextToSpeech.On
             tts.setPitch(1.1f);
             ttsReady = true;
         }
+    }
+
+    /**
+     * Adds points to the cumulative score in SharedPreferences.
+     * MainActivity reads this in onResume() to display the running total.
+     */
+    private void saveScoreToPrefs(int points) {
+        SharedPreferences prefs = getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE);
+        int previous = prefs.getInt(MainActivity.KEY_TOTAL, 0);
+        prefs.edit()
+                .putInt(MainActivity.KEY_TOTAL, previous + points)
+                .apply();
     }
 
     @Override protected void onDestroy() {
@@ -405,6 +418,7 @@ public class ShapesActivity extends AppCompatActivity implements TextToSpeech.On
 
     private void showCelebration() {
         speak("Amazing! You sorted all the shapes! You are a star!");
+        saveScoreToPrefs(6); // award 6 stars (one per shape sorted) for completing a round
         celebOverlay.setVisibility(View.VISIBLE);
         celebOverlay.setAlpha(0f);
         celebOverlay.animate().alpha(1f).setDuration(480).start();

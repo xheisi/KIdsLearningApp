@@ -2,6 +2,7 @@ package com.example.kidslearningapp;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.SharedPreferences;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
@@ -124,6 +125,18 @@ public class AlphabetActivity extends AppCompatActivity implements TextToSpeech.
             ttsReady = true;
             new Handler().postDelayed(this::speakCurrent, 900);
         }
+    }
+
+    /**
+     * Adds points to the cumulative score in SharedPreferences.
+     * MainActivity reads this in onResume() to display the running total.
+     */
+    private void saveScoreToPrefs(int points) {
+        SharedPreferences prefs = getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE);
+        int previous = prefs.getInt(MainActivity.KEY_TOTAL, 0);
+        prefs.edit()
+                .putInt(MainActivity.KEY_TOTAL, previous + points)
+                .apply();
     }
 
     @Override
@@ -291,6 +304,7 @@ public class AlphabetActivity extends AppCompatActivity implements TextToSpeech.
             );
         }
 
+        saveScoreToPrefs(10); // award 10 stars for completing a round
         celebOverlay.setVisibility(View.VISIBLE);
         celebOverlay.setAlpha(0f);
         celebOverlay.animate()

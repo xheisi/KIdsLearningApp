@@ -1,5 +1,6 @@
 package com.example.kidslearningapp;
 
+import android.content.SharedPreferences;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
@@ -35,6 +36,7 @@ public class NumbersActivity extends AppCompatActivity implements TextToSpeech.O
             0xFF78909C
     };
     private int currentStart = 1;
+    private int roundsCompleted = 0; // track completed rounds for score
     private static final int TOTAL = 10;
     private static final int DROP_COUNT = 5;
 
@@ -344,11 +346,15 @@ public class NumbersActivity extends AppCompatActivity implements TextToSpeech.O
         if (placedCount < DROP_COUNT) return;
 
         new Handler().postDelayed(() -> {
+            roundsCompleted++;
+            saveScoreToPrefs(DROP_COUNT); // award points per completed round
             speak("Great! Next level!");
 
             currentStart += 10;
 
             if (currentStart > 100) {
+                roundsCompleted++;
+                saveScoreToPrefs(DROP_COUNT);
                 speak("You finished all levels!");
                 new Handler().postDelayed(this::finish, 2500);
             } else {
@@ -466,6 +472,18 @@ public class NumbersActivity extends AppCompatActivity implements TextToSpeech.O
         if (ttsReady) {
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "number");
         }
+    }
+
+    /**
+     * Adds points to the cumulative score in SharedPreferences.
+     * MainActivity reads this in onResume() to display the running total.
+     */
+    private void saveScoreToPrefs(int points) {
+        SharedPreferences prefs = getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE);
+        int previous = prefs.getInt(MainActivity.KEY_TOTAL, 0);
+        prefs.edit()
+                .putInt(MainActivity.KEY_TOTAL, previous + points)
+                .apply();
     }
 
     @Override
